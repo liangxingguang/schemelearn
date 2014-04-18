@@ -1,0 +1,11 @@
+#lang racket
+(define a 'Harry)
+(define b 'Harry)
+(eq? a b)
+(set! a 'Harry)
+(set! b 'margarine)
+(eq? a b)
+(set! a '(a b c))
+(set! b '(a b c))
+(eq? a b)
+(eq? "abc" "abc")

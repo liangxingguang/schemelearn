@@ -82,3 +82,43 @@
 (p3 'get-y)
 
 
+;;;;;;;;;;;;;
+(define (make-stack1)
+  (cons '() 0))
+
+;;check the stack is emptied
+(define (empty-stack? stack)
+  (= (cdr stack) 0))
+
+;;get the top element of the stack
+(define (top-stack1 stack)
+  (if (empty-stack? stack)
+      (display "No element!")
+      (caar stack)))
+;;push a element into the stack
+(define (push-stack! stack item)
+  (let ((new-item (cons item (car stack))))
+    (set-car! stack new-item)
+    (set-cdr! stack (+ (cdr stack) 1))))
+(define (set-car! lat new)
+   (cons new (cdr lat)))
+(define (set-cdr! lat new)
+   (cons (car lat) new))
+;;pop out a element of the stack
+(define (pop-stack! stack)
+  (if (empty-stack? stack)
+      (display "No element！")
+      (let ((item (top-stack1 stack)))
+        (set-car! stack (cdar stack))
+        (set-cdr! stack (- (cdr stack) 1))
+        item)))
+(define stack (make-stack1))
+(display "!!!!!!!!!!!!!\n")
+(empty-stack? stack)
+(push-stack! stack 'a)
+(push-stack! stack 'b)
+(top-stack1 stack)
+stack
+(pop-stack! stack)
+stack
+(set-car! )

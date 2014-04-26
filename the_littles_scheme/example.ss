@@ -239,12 +239,47 @@
 (define tup+
   (lambda (tup1 tup2)
     (cond
-     ((and (null? tup1) (null? tup2))
-      (quote ()))
+     ( (null? tup1) tup2)
+      [(null? tup2) tup1]
      (else
         (cons (add (car tup1) (car tup2))
               (tup+ (cdr tup1) (cdr tup2)))))))
 (tup+ '(1 2 3) '(4 5 6))
 ;(tup+ '(a b c) '(d e f))
 
+(define more
+  (lambda (n m)
+    (cond
+      [(zero? n) #f]
+      [(zero? m) #t]
+      (else
+       (more (sub1 n) (sub1 m))))))
+(more 3 4)
 
+(define less
+  (lambda (n m)
+    (cond
+      [(zero? m) #f]
+      [(zero? n) #t]
+      (else
+       (less (sub1 n) (sub1 m))))))
+(less 3 4)
+
+(define eq
+  (lambda ( n m)
+    (cond
+      [(zero? m) (zero? n)]
+      [(zero? n) #f]
+      [else
+       (eq (sub1 n) (sub1 m))])))
+(eq 3 3)
+(eq 3 4)
+
+(define eq1
+  (lambda ( n m )
+    (cond
+      [(more n m) #f]
+      [(less n m) #f]
+      (else #t))))
+(eq1 3 3)
+(eq1 3 5)

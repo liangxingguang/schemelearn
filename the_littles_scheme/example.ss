@@ -176,4 +176,75 @@
           (cons (car lat) (subst2* new o1 o2 (cdr lat)))))))))
 (subst2* 'vanilla 'with 'banana 
         '(banana ice cream with chocolate topping))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define multirember
+  (lambda (a lat)
+    (cond
+      ((null? lat) (quote ()))
+      (else
+       (cond
+         ((eq? (car lat) a)
+          (multirember a (cdr lat)))
+         (else
+          (cons (car lat)
+                (multirember a 
+                             (cdr lat)))))))))
+(multirember 'a '(a b a c d a e g))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define multisubst
+  (lambda (new old lat)
+    (cond
+      ((null? lat) (quote()))
+      (else (cond
+              ((eq? (car lat) old)
+              (cons new (multisubst new old
+                                    (cdr lat))))
+            (else (cons (car lat)
+                        (multisubst new old (cdr lat)))))))))
+(multisubst 'd3 'b '(a b d b c d e f))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define add1
+  (lambda (n)
+    (+ n 1)))
+(add1 3)
+
+(define sub1
+  (lambda (n)
+    (- n 1)))
+(define add
+  (lambda (n m)
+    (cond
+      ((zero? m) n)
+      (else
+       (add1 (add n (sub1 m)))))))
+(add 3 4)
+(define sub
+  (lambda (n m)
+    (cond
+      ((zero? m) n)
+      (else
+       (sub1 (sub n (sub1 m)))))))
+(sub 3 4)
+
+(define multiply
+  (lambda (n m)
+    (cond
+      ((zero? m) 0)
+      (else
+       (add n (multiply n (sub1 m)))))))
+(multiply 3 4)
+
+(define tup+
+  (lambda (tup1 tup2)
+    (cond
+     ((and (null? tup1) (null? tup2))
+      (quote ()))
+     (else
+        (cons (add (car tup1) (car tup2))
+              (tup+ (cdr tup1) (cdr tup2)))))))
+(tup+ '(1 2 3) '(4 5 6))
+;(tup+ '(a b c) '(d e f))
+
 
